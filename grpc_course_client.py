@@ -1,4 +1,4 @@
-import grpc
+import grpc # Импорты
 
 import course_service_pb2
 import course_service_pb2_grpc

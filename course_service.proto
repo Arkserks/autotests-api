@@ -1,3 +1,5 @@
+// Новый прото конфиг для задания
+
 syntax = "proto3";
 
 package courseservice;
