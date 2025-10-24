@@ -1,0 +1,47 @@
+name: 🤖 AI Review
+
+on:
+  # Ручной запуск пайплайна из вкладки Actions (можно заменить на on: pull_request)
+  workflow_dispatch:
+    inputs:
+      review-command:
+        type: choice
+        default: "run"
+        options: [ run, run-inline, run-context, run-summary, run-inline-reply, run-summary-reply ]
+        required: true
+        description: "AI Review command"
+
+      pull-request-number:
+        type: string
+        required: true
+        description: "Pull request number"
+
+jobs:
+  ai-review:
+    name: Run AI Review
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Клонируем репозиторий и получаем diff изменений
+      - name: 🧱 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2️⃣ Запускаем AI Review
+      - name: 🚀 Run AI Review
+        uses: Nikita-Filonov/ai-review@v0.36.0
+        env:
+          # 🔑 Токен GitHub для доступа к Pull Request и публикации комментариев
+          VCS__HTTP_CLIENT__API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # 📦 Контекст PR — владелец, репозиторий и номер запроса
+          VCS__PIPELINE__OWNER: ${{ github.repository_owner }}
+          VCS__PIPELINE__REPO: ${{ github.event.repository.name }}
+          VCS__PIPELINE__PULL_NUMBER: ${{ inputs.pull-request-number }}
+
+          # 🤖 Токен OpenRouter для доступа к LLM
+          LLM__HTTP_CLIENT__API_TOKEN: ${{ secrets.OPENROUTER_API_TOKEN }}
+
+        with:
+          # 🧠 Команда ревью: полный анализ, только inline, только summary и т.д.
+          review-command: ${{ inputs.review-command }}
