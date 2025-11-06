@@ -51,7 +51,7 @@ class ExercisesClient(APIClient):
         """
         return self.get("/api/v1/exercises", params=query)
 
-    def get_exercise_api(self, exersice_id: str) -> Response:
+def get_exercise_api(self, exercise_id: str) -> Response:
         """
         Метод получения упражнения.
 
