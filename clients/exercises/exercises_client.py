@@ -83,7 +83,7 @@ class ExercisesClient(APIClient):
         """
         Метод удаления упражнения.
 
-        :param exercise_id: Идентификатор курса.
+        :param exercise_id: Идентификатор упражнения.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
         return self.delete(f"/api/v1/exercises/{exercise_id}")
