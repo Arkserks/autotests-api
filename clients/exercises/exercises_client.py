@@ -51,14 +51,14 @@ class ExercisesClient(APIClient):
         """
         return self.get("/api/v1/exercises", params=query)
 
-    def get_exercise_api(self, exersice_id: str) -> Response:
+    def get_exercise_api(self, exercise_id: str) -> Response:
         """
         Метод получения упражнения.
 
-        :param exersice_id: Идентификатор упражнения.
+        :param exercise_id: Идентификатор упражнения.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        return self.get(f"/api/v1/exercises/{exersice_id}")
+        return self.get(f"/api/v1/exercises/{exercise_id}")
 
     def create_exercise_api(self, request: CreateExercisesQueryDict) -> Response:
         """
